@@ -86,7 +86,7 @@ fun EsJumboApp(
                     onNextButtonClicked = {
                         navController.navigate(PengelolaHalaman.Rasa.name) })
             }
-            composable(route = PengelolaHalaman.Rasa.name){
+            composable(route = PengelolaHalaman.Form.name){
                 val context = LocalContext.current
                 HalamanSatu(
                     pilihanRasa = flavors.map {id -> context.resources.getString(id)},
