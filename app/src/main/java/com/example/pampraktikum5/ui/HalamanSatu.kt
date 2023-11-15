@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.pampraktikum5.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HalamanSatu(
     pilihanRasa: List<String>,
