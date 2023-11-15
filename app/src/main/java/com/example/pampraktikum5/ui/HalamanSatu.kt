@@ -117,7 +117,6 @@ fun HalamanSatu(
                 ) {
                     Text(text = stringResource(R.string.next))
                 }
-
             }
         }
     }
