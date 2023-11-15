@@ -41,4 +41,55 @@ fun HalamanForm(
     var nomortlpText by remember {
         mutableStateOf("")
     }
+    var listData: MutableList<String> = mutableListOf(namaText, alamatText, nomortlpText)
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Masukan data diri", fontWeight = FontWeight.Bold, fontSize = 25.sp)
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = namaText,
+                shape = MaterialTheme.shapes.large,
+                label = { Text(text = stringResource(id = R.string.nameUser)) },
+                onValueChange = {namaText = it}
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = alamatText,
+                shape = MaterialTheme.shapes.large,
+                label = { Text(text = stringResource(id = R.string.addressUser)) },
+                onValueChange = {alamatText = it}
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = nomortlpText,
+                shape = MaterialTheme.shapes.large,
+                label = { Text(text = stringResource(id = R.string.phoneUser)) },
+                onValueChange = {nomortlpText = it}
+            )
+
+
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
+        Row (modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ){
+            Button(onClick = {onBackButtonCLicked}) {
+                Text(text = stringResource(id = R.string.back_button))
+            }
+            Button(onClick = {onSubmitButtonClicked(listData)}) {
+                Text(text = stringResource(id = R.string.submit_button))
+            }
+        }
+    }
 }
