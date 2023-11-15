@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.activity5.HalamanForm
 import com.example.pampraktikum5.R
 import com.example.pampraktikum5.data.SumberData.flavors
 
@@ -85,6 +86,16 @@ fun EsJumboApp(
                 HalamanHome(
                     onNextButtonClicked = {
                         navController.navigate(PengelolaHalaman.Rasa.name) })
+            }
+            composable(route = PengelolaHalaman.Form.name) {
+                HalamanForm(
+                    onSubmitButtonClicked = {
+                        viewModel.setNama(it)
+                        navController.navigate(PengelolaHalaman.Rasa.name)
+                    },
+                    onBackButtonCLicked = {
+                        navController.popBackStack()
+                    })
             }
             composable(route = PengelolaHalaman.Form.name){
                 val context = LocalContext.current
