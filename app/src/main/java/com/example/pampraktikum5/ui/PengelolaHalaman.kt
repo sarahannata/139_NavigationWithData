@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.activity5.HalamanForm
 import com.example.pampraktikum5.R
+import com.example.pampraktikum5.data.FormState
 import com.example.pampraktikum5.data.SumberData.flavors
 
 enum class PengelolaHalaman {
@@ -114,6 +115,7 @@ fun EsJumboApp(
             composable(route = PengelolaHalaman.Summary.name){
                 HalamanDua(
                     orderUIState = uiState,
+                    formState = FormState(),
                     onCancelButtonClicked = {cancelOrderAndNavigateToRasa(navController)},
                     )
             }
