@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,6 +29,7 @@ import com.example.pampraktikum5.data.SumberData.flavors
 enum class PengelolaHalaman {
     Home,
     Rasa,
+    Form,
     Summary
 }
 
@@ -40,7 +40,8 @@ fun EsJumboAppBar(
     navigasiUp: () -> Unit,
     modifier: Modifier = Modifier
 ){
-    TopAppBar(title = { Text(stringResource(id = R.string.app_name)) },
+    TopAppBar(
+        title = { Text(stringResource(id = R.string.app_name)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
@@ -73,6 +74,7 @@ fun EsJumboApp(
         }
     ){ innerPadding ->
         val uiState by viewModel.stateUI.collectAsState()
+
         NavHost(
             navController = navController,
             startDestination = PengelolaHalaman.Home.name,
