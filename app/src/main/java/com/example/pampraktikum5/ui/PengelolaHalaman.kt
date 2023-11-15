@@ -74,6 +74,7 @@ fun EsJumboApp(
         }
     ){ innerPadding ->
         val uiState by viewModel.stateUI.collectAsState()
+        val nameState by viewModel.nameST.collectAsState()
 
         NavHost(
             navController = navController,
