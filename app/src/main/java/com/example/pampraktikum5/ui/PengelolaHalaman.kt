@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -61,63 +62,60 @@ fun EsJumboAppBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EsJumboApp(
-    viewModel: OrderViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: OrderViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ){
-    Scaffold (
+    Scaffold(
         topBar = {
-            EsJumboAppBar(
-                bisaNavigasiBack = false,
-                navigasiUp = {/*TODO: implement back navigation */}
+            EsJumboAppBar(bisaNavigasiBack = false, navigasiUp = { /*TODO:*/
+            }
             )
         }
-    ){ innerPadding ->
+    ) {innerPadding ->
         val uiState by viewModel.stateUI.collectAsState()
         val nameState by viewModel.nameST.collectAsState()
-
         NavHost(
             navController = navController,
             startDestination = PengelolaHalaman.Home.name,
             modifier = Modifier.padding(innerPadding)
         ){
             composable(route = PengelolaHalaman.Home.name){
-                HalamanHome(
+                HalamanHome (
                     onNextButtonClicked = {
-                        navController.navigate(PengelolaHalaman.Rasa.name) })
-            }
-            composable(route = PengelolaHalaman.Form.name) {
-                HalamanForm(
-                    onSubmitButtonClicked = {
-                        viewModel.setNama(it)
-                        navController.navigate(PengelolaHalaman.Rasa.name)
-                    },
-                    onBackButtonCLicked = {
-                        navController.popBackStack()
-                    })
-            }
-            composable(route = PengelolaHalaman.Form.name){
-                val context = LocalContext.current
-                HalamanSatu(
-                    pilihanRasa = flavors.map {id -> context.resources.getString(id)},
-                    onSelectionChanged = { viewModel.setRasa(it)},
-                    onConfirmButtonClicked = { viewModel.setJumlah(it)},
-                    onNextButtonClicked = { navController.navigate(PengelolaHalaman.Summary.name) },
-                    onCancelButtonClicked = {cancelOrderAndNavigateToHome(
-                        viewModel,
-                        navController
-                    )
+                        navController.navigate(PengelolaHalaman.Form.name)
                     }
                 )
             }
+
+            composable(route = PengelolaHalaman.Form.name){
+                HalamanForm(
+                    onSubmitButtonClicked = {
+                        viewModel.setNama(it)
+                        navController.navigate(PengelolaHalaman.Rasa.name)},
+                    onBackButtonCLicked = {navController.popBackStack()
+                    })
+            }
+
+            composable(route = PengelolaHalaman.Rasa.name){
+                val context = LocalContext.current
+                HalamanSatu(
+                    pilihanRasa = flavors.map { id -> context.resources.getString(id) },
+                    onSelectionChanged = { viewModel.setRasa(it)},
+                    onConfirmButtonClicked = {viewModel.setJumlah(it)},
+                    onNextButtonClicked = {navController.navigate(PengelolaHalaman.Summary.name)},
+                    onCancelButtonClicked = {cancelOrderAndNavigateToHome(
+                        viewModel,
+                        navController
+                    )})
+            }
+
             composable(route = PengelolaHalaman.Summary.name){
                 HalamanDua(
                     orderUIState = uiState,
-                    formState = FormState(),
-                    onCancelButtonClicked = {cancelOrderAndNavigateToRasa(navController)},
-                    )
+                    formState = nameState,
+                    onCancelButtonClicked = { cancelOrderAndNavigateToRasa(navController) })
             }
         }
     }
